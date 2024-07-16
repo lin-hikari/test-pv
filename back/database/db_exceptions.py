@@ -1,0 +1,2 @@
+class MonthNumberException(Exception):
+    pass
