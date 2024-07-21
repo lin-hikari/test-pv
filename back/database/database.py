@@ -81,11 +81,16 @@ class Database:
     def insert_complaint(self):
         pass
 
-    def get_complaints(self):
+    def get_complaints(self, from_date: datetime, to_date: datetime):
         complaints_with_user_data = []
         users = { user['id']: user for user in self.users }
+
+        complaints_in_time = [
+            complaint for complaint in self.complaints
+            if (complaint['date'] >= from_date and complaint['date'] <= to_date)
+        ]
         
-        for complaint in self.complaints:
+        for complaint in complaints_in_time:
             user_id = complaint['user_id']
             user = users[user_id]
 

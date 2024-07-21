@@ -3,12 +3,13 @@ from back.schemas.group_bys import *
 from fastapi import APIRouter, HTTPException
 from back.database.database import client
 from http import HTTPStatus
+from datetime import datetime
 
 router = APIRouter(prefix='/complaints', tags=['complaints'])
 
-@router.get('/', response_model=ComplaintUserList)
-def get_complaints():
-    complaints = client.get_complaints()
+@router.get('/{from_date}{to_date}', response_model=ComplaintUserList)
+def get_complaints(from_date: datetime, to_date: datetime):
+    complaints = client.get_complaints(from_date, to_date)
     complaints.sort(key=lambda x: x['id'])
     return {'complaints': complaints}
 
