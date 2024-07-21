@@ -107,6 +107,12 @@ class Database:
             return result[0]
         return None
     
+    def get_complaints_from_user(self, user_id: str):
+        if(self.get_user(user_id) == None):
+            return None
+        else:
+            return [complaint for complaint in self.complaints if complaint['user_id'] == user_id]
+    
     def group_by(self, complaint_key: str):
         """ Groups the number of complaints by each value of given key. """
         grouped_data = {}

@@ -21,9 +21,13 @@ def get_complaint(complaint_id: str):
 
     return complaint
 
-# @router.get('/user/{user_id}', response_model=ComplaintList)
-# def get_complaints_from_user(user_id: str):
-#     # Implement your function here!
+@router.get('/user/{user_id}', response_model=ComplaintList)
+def get_complaints_from_user(user_id: str):
+    complaints = client.get_complaints_from_user(user_id)
+    if(complaints == None):
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="User not found.")
+    else:
+        return complaints
 
 @router.get('/group/types', response_model=GroupByTypes)
 def get_complaints_group_by_types():
