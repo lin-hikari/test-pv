@@ -13,14 +13,14 @@ def get_complaints(from_date: datetime, to_date: datetime):
     complaints.sort(key=lambda x: x['id'])
     return {'complaints': complaints}
 
-@router.get('/{complaint_id}', response_model=ComplaintSchema)
+@router.get('/{complaint_id}', response_model=ComplaintUserSchema)
 def get_complaint(complaint_id: str):
-    complaint = client.get_complaint(complaint_id)
+    complaint_user = client.get_complaint(complaint_id)
     
-    if complaint is None:
+    if complaint_user is None:
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Complaint not found.")
 
-    return complaint
+    return complaint_user
 
 @router.get('/user/{user_id}', response_model=ComplaintList)
 def get_complaints_from_user(user_id: str):
